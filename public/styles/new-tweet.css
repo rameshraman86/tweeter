@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+}
+
+.new-tweet {
+  margin-left: 5%;
+  margin-right: 5%;
+  /* width: 100%; */
+}
+
+textarea {
+  border-color:  #494d5f; /* Reset the default border styles */
+  outline: none; /* Remove the default focus outline */
+  border-bottom: 2px solid #d0bdf4; /* Add a bottom border */
+  width: 100%;
+  background-color: #494d5f;
+  color: #FFFFFF;
+}
+
+.tweetContent {
+  font-family: 'Bungee', cursive;
+  display: flex;
+  justify-content: space-between;
+}
+
+.counter {
+  color:#FFFFFF;
+}
+
+.counterRed {
+  color: red;
+}
+
+button {
+  color: #FFFFFF;
+  background: #4056A1;
+}
