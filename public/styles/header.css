@@ -1,4 +1,4 @@
-header {
+.main-header {
   display: flex;
   flex-direction: column;
   height: 520px;
@@ -6,9 +6,5 @@ header {
   justify-content: center;
   align-items: center;
   padding-top: 120px;
-  background-color:#d0bdf4;
-}
-
-header img {
-  /* padding-top: 300px; */
+  background-color: #d0bdf4;
 }

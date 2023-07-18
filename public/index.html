@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" type="text/css" />
   <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/tweet-container.css" type="text/css" />
 
 
   <!-- External JS -->
@@ -51,7 +52,7 @@
     </div>
   </nav>
 
-  <header>
+  <header class="main-header">
     <div>
       <img src="/images/profile-hex.png">
     </div>
@@ -74,6 +75,43 @@
           <output name="counter" id="counter" class="counter" for="tweet-text">140</output>
         </div>
       </form>
+    </section>
+
+    <!-- <TWEETS AREA> -->
+    <section class="tweet-container">
+      <article class="tweet">
+
+        <header>
+          <div class="tweet-header-left-side">
+            <span class="user-icon">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </span>
+            <span class="user-full-name">Rhonda Jacobs</span>
+          </div>
+
+          <div class="tweet-header-right-side">
+            <span class="user-handle">@MrsJacobs</span>
+          </div>
+        </header>
+
+        <p>I am not afraid of threads.</p>
+        <hr>
+
+        <footer>
+          <div>
+            <span class="tweet-duration">10 days ago</span>
+          </div>
+          <div class="tweet-footer-right-side">
+            <span class="flag-icon"><i class="fa-regular fa-flag"></i></span>
+            <span class="retweet-icon"><i class="fa-solid fa-retweet"></i></span>
+            <span class="heart-icon"><i class="fa-regular fa-heart"></i></span>
+          </div>
+        </footer>
+
+      </article>
+
+
+
     </section>
 
   </main>
