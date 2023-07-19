@@ -29,13 +29,6 @@ $(document).ready(function() {
     $flagIcon[0].setAttribute("class", "fa-regular fa-flag");
   });
 
-  // $($retweetIcon).on('mouseover', function(e) {
-  //   $retweetIcon[0].setAttribute("class", "fa-solid fa-retweet");
-  // });
-  // $($retweetIcon).on('mouseout', function(e) {
-  //   $retweetIcon[0].setAttribute("class", "fa-thin fa-retweet");
-  // });
-
 
   $($heartIcon).on('mouseover', function(e) {
     $heartIcon[0].setAttribute("class", "fa-solid fa-heart");
