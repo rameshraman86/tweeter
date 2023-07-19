@@ -2,24 +2,20 @@ $(document).ready(function() {
   // --- our code goes here ---
   $("#tweet-text").on('input', function(e) {
     var $tweet = $(this);
-    var $counter = $tweet.siblings('.tweetContent').find('.counter');
-    const allowedTweetLength = 140;
+    var $counter = $("#counter");
 
+    const allowedTweetLength = 140;
     var remainingChars = allowedTweetLength - $tweet.val().length;
-    $counter.val(remainingChars);
 
     if (remainingChars < 0) {
-      $counter[0].classList.remove('counter');
-      $counter[0].classList.add('counterRed');
+      $counter.removeClass("counter").addClass("counterRed");
     } else {
-      $counter[0].classList.remove('counterRed');
-      $counter[0].classList.add('counter');
+      $counter.removeClass("counterRed").addClass("counter");
     }
+    $counter.val(remainingChars);
   });
 
-
   var $flagIcon = $(".flag-icon i");
-  var $retweetIcon = $(".retweet-icon i");
   var $heartIcon = $(".heart-icon i");
 
   $($flagIcon).on('mouseover', function(e) {
