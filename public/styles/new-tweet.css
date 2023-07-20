@@ -20,6 +20,7 @@ textarea {
 
 #error-message {
   color: red;
+  display: none;
 }
 
 .tweetContent {

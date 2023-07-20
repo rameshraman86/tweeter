@@ -97,11 +97,16 @@ $(document).ready(function() {
 
 
 
-  const errorMessageElement = function() {
+  const errorMessageElement = function(errorType) {
     const $h3Error = $('<h3>').attr('id', 'error-message');
-    $h3Error.text("Uh oh!!! Tweet length exceeds 140 characters. Buy \"tweeter pro\" to enter more.");
-    // $("form").before($h3Error);
-    return $h3Error;
+    if (errorType === "zero") {
+      $h3Error.text("Don't be shy. Use your words.");
+      return $h3Error;
+    }
+    if (errorType === "exceededLength") {
+      $h3Error.text("Uh oh!!! Tweet length exceeds 140 characters. Buy \"tweeter pro\" to enter more.");
+      return $h3Error;
+    }
   };
 
   const loadTweets = function() {
@@ -128,11 +133,13 @@ $(document).ready(function() {
     }
 
     if ($tweet.length === 0) {
-      $("form").before(errorMessageElement().slideDown());
+      $("form").before(errorMessageElement("zero"));
+      $("#error-message").slideToggle();
       return;
     }
     if ($tweet.length > 140) {
-      $("form").before(errorMessageElement().slideDown());
+      $("form").before(errorMessageElement("exceededLength"));
+      $("#error-message").slideToggle();
       return;
     }
 
@@ -141,7 +148,6 @@ $(document).ready(function() {
       url: "/tweets",
       data: $tweetDataSerialized,
       success: function() {
-        // Clear the tweet input field after successful submission
         $("#tweet-text").val('');
 
         // Fetch and add the latest tweet to the page
