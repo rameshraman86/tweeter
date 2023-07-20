@@ -130,6 +130,7 @@ $(document).ready(function() {
 
     if ($("#error-message")) {
       $("#error-message").hide();
+      $("#error-message").remove();
     }
 
     if ($tweet.length === 0) {
