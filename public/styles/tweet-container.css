@@ -20,11 +20,12 @@ article:hover{
 }
 
 header {
-  height: 5%;
+  height: 10%;
+  color: aliceblue;
 }
 
-.user-icon{
-  padding-right: 10px;
+img{
+  padding-right: 5px;
 }
 
 .user-handle {

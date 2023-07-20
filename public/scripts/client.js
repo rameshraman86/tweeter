@@ -3,8 +3,10 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
+// import { format } from 'timeago.js';
 
 $(document).ready(function() {
+
   // Fake data taken from initial-tweets.json
   const data = [
     {
@@ -39,37 +41,97 @@ $(document).ready(function() {
     }
   };
 
+
   const createTweetElement = function(tweet) {
-    const $tweetData = `
-            <article class="tweet">
-              <header>
-                  <div class="tweet-header-left-side">
-                    <span class="user-icon">
-                    <i class="fa-solid fa-user-astronaut"></i>
-                    </span>
-                    <span class="user-full-name">${tweet["user"]["name"]}</span>
-                  </div>
-                  <div class="tweet-header-right-side">
-                    <span class="user-handle">${tweet["user"]["handle"]}</span>
-                  </div>
-              </header>
-              <p>${tweet["content"]["text"]}</p>
-              <hr>
-              <footer>
-                  <div>
-                    <span class="tweet-duration">${tweet["created_at"]}</span>
-                  </div>
-                  <div class="tweet-footer-right-side">
-                    <span class="flag-icon"><i class="fa-regular fa-flag"></i></span>
-                    <span class="retweet-icon"><i class="fa-solid fa-retweet"></i></span>
-                    <span class="heart-icon"><i class="fa-regular fa-heart"></i></span>
-                  </div>
-              </footer>
-            </article>
-            `;
-    return $tweetData;
+    const { content, created_at, user } = tweet;
+    const timePassed = timeago.format(created_at);
+    const avatar = user.avatars;
+    const handle = user.handle;
+    const name = user.name;
+
+    const $article = $('<article>').addClass('tweet');
+
+    const $header = $('<header>');
+    const $leftSide = $('<div>').addClass('tweet-header-left-side');
+    const $avatar = $('<span>').addClass('avatar');
+    const $avatarImg = $('<img>').attr('src', sanitize(avatar));
+    const $fullName = $('<span>').addClass('user-full-name').text(sanitize(name));
+
+    $avatar.append($avatarImg);
+    $leftSide.append($avatar, $fullName);
+
+    const $rightSide = $('<div>').addClass('tweet-header-right-side');
+    const $handle = $('<span>').addClass('user-handle').text(sanitize(handle));
+
+    $rightSide.append($handle);
+
+    $header.append($leftSide, $rightSide);
+
+    const $content = $('<p>').text(sanitize(content.text));
+
+    const $hr = $('<hr>');
+
+    const $footer = $('<footer>');
+    const $duration = $('<span>').addClass('tweet-duration').text(sanitize(timePassed));
+
+    const $footerRightSide = $('<div>').addClass('tweet-footer-right-side');
+    const $flagIcon = $('<span>').addClass('flag-icon').html('<i class="fa-regular fa-flag"></i>');
+    const $retweetIcon = $('<span>').addClass('retweet-icon').html('<i class="fa-solid fa-retweet"></i>');
+    const $heartIcon = $('<span>').addClass('heart-icon').html('<i class="fa-regular fa-heart"></i>');
+
+    $footerRightSide.append($flagIcon, $retweetIcon, $heartIcon);
+
+    $footer.append($('<div>').append($duration), $footerRightSide);
+
+    $article.append($header, $content, $hr, $footer);
+
+    return $article;
   };
 
-  renderTweets(data);
+  function sanitize(text) {
+    const element = document.createTextNode(text);
+    const div = document.createElement('div');
+    div.appendChild(element);
+    return div.innerHTML;
+  }
 
+
+  const loadTweets = function() {
+    $.ajax({
+      method: "GET",
+      url: "/tweets",
+    }).then((res) => {
+      renderTweets(res);
+    }
+    );
+  };
+  loadTweets();
+
+
+
+  const $form = $('form');
+  $form.on('submit', function(event) {
+    const $tweetDataSerialized = $form.serialize();
+    const $tweet = $("#tweet-text")[0].value;
+    event.preventDefault();
+
+    if ($tweet.length === 0) {
+      alert('Please enter valid tweet');
+      return;
+    }
+    if ($tweet.length > 140) {
+      alert('Tweet length exceeds maximum allowed 140 characters.');
+      return;
+    }
+
+    $.ajax({
+      method: "POST",
+      url: "/tweets",
+      data: $tweetDataSerialized,
+      success: function() {
+        $('#tweets-container').empty();
+        loadTweets();
+      }
+    });
+  });
 });
