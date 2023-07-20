@@ -141,8 +141,19 @@ $(document).ready(function() {
       url: "/tweets",
       data: $tweetDataSerialized,
       success: function() {
-        $('#tweets-container').empty();
-        loadTweets();
+        // Clear the tweet input field after successful submission
+        $("#tweet-text").val('');
+
+        // Fetch and add the latest tweet to the page
+        $.ajax({
+          method: "GET",
+          url: "/tweets",
+          success: function(res) {
+            const latestTweet = res[0];
+            const $formattedTweetData = createTweetElement(latestTweet);
+            $('#tweets-container').prepend($formattedTweetData);
+          }
+        });
       }
     });
   });

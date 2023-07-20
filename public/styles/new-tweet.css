@@ -21,6 +21,7 @@ textarea {
 #error-message {
   color: red;
 }
+
 .tweetContent {
   font-family: 'Bungee', cursive;
   display: flex;
