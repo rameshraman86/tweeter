@@ -96,6 +96,14 @@ $(document).ready(function() {
   }
 
 
+
+  const errorMessageElement = function() {
+    const $h3Error = $('<h3>').attr('id', 'error-message');
+    $h3Error.text("Uh oh!!! Tweet length exceeds 140 characters. Buy \"tweeter pro\" to enter more.");
+    // $("form").before($h3Error);
+    return $h3Error;
+  };
+
   const loadTweets = function() {
     $.ajax({
       method: "GET",
@@ -115,12 +123,16 @@ $(document).ready(function() {
     const $tweet = $("#tweet-text")[0].value;
     event.preventDefault();
 
+    if ($("#error-message")) {
+      $("#error-message").hide();
+    }
+
     if ($tweet.length === 0) {
-      alert('Please enter valid tweet');
+      $("form").before(errorMessageElement().slideDown());
       return;
     }
     if ($tweet.length > 140) {
-      alert('Tweet length exceeds maximum allowed 140 characters.');
+      $("form").before(errorMessageElement().slideDown());
       return;
     }
 
