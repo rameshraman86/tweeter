@@ -15,23 +15,13 @@ $(document).ready(function() {
     $counter.val(remainingChars);
   });
 
-  var $flagIcon = $(".flag-icon i");
-  var $heartIcon = $(".heart-icon i");
-
-  $($flagIcon).on('mouseover', function(e) {
-    $flagIcon[0].setAttribute("class", "fa-solid fa-flag");
+  $("footer").find(".fa-regular.fa-flag, .fa-regular.fa-circle, .fa-regular.fa-heart").on({
+    mouseenter: function() {
+      $(this).removeClass("fa-regular").addClass("fa-solid");
+    },
+    mouseleave: function() {
+      $(this).removeClass("fa-solid").addClass("fa-regular");
+    }
   });
-  $($flagIcon).on('mouseout', function(e) {
-    $flagIcon[0].setAttribute("class", "fa-regular fa-flag");
-  });
-
-
-  $($heartIcon).on('mouseover', function(e) {
-    $heartIcon[0].setAttribute("class", "fa-solid fa-heart");
-  });
-  $($heartIcon).on('mouseout', function(e) {
-    $heartIcon[0].setAttribute("class", "fa-regular fa-heart");
-  });
-
 
 });

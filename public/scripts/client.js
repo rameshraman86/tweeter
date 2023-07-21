@@ -3,10 +3,9 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-// import { format } from 'timeago.js';
+
 
 $(document).ready(function() {
-
   // Fake data taken from initial-tweets.json
   const data = [
     {
@@ -51,39 +50,33 @@ $(document).ready(function() {
 
     const $article = $('<article>').addClass('tweet');
 
-    const $header = $('<header>');
-    const $leftSide = $('<div>').addClass('tweet-header-left-side');
-    const $avatar = $('<span>').addClass('avatar');
-    const $avatarImg = $('<img>').attr('src', sanitize(avatar));
-    const $fullName = $('<span>').addClass('user-full-name').text(sanitize(name));
+    const $tweetHeader = $('<div>').addClass('tweet-header').attr('id', "tweet-header");
+    const $leftSideOfHeader = $('<div>').addClass('tweet-header-left');
 
-    $avatar.append($avatarImg);
-    $leftSide.append($avatar, $fullName);
+    const $avatar = $('<img>').attr('src', sanitize(avatar));
+    const $fullName = $('<span>').text(sanitize(name));
+    $leftSideOfHeader.append($avatar, $fullName);
+    const $handle = $('<span>').attr('id', "user-handle").text(sanitize(handle));
+    $tweetHeader.append($leftSideOfHeader, $handle);
 
-    const $rightSide = $('<div>').addClass('tweet-header-right-side');
-    const $handle = $('<span>').addClass('user-handle').text(sanitize(handle));
-
-    $rightSide.append($handle);
-
-    $header.append($leftSide, $rightSide);
 
     const $content = $('<p>').text(sanitize(content.text));
-
     const $hr = $('<hr>');
 
     const $footer = $('<footer>');
-    const $duration = $('<span>').addClass('tweet-duration').text(sanitize(timePassed));
+    const $duration = $('<span>').text(sanitize(timePassed));
 
-    const $footerRightSide = $('<div>').addClass('tweet-footer-right-side');
-    const $flagIcon = $('<span>').addClass('flag-icon').html('<i class="fa-regular fa-flag"></i>');
-    const $retweetIcon = $('<span>').addClass('retweet-icon').html('<i class="fa-solid fa-retweet"></i>');
-    const $heartIcon = $('<span>').addClass('heart-icon').html('<i class="fa-regular fa-heart"></i>');
 
-    $footerRightSide.append($flagIcon, $retweetIcon, $heartIcon);
+    const $footerRightSideDiv = $('<div>');
 
-    $footer.append($('<div>').append($duration), $footerRightSide);
+    const $flag = $('<i>').addClass('fa-regular fa-flag');
+    const $retweet = $('<i>').addClass('fa-regular fa-circle');
+    const $heart = $('<i>').addClass('fa-regular fa-heart');
 
-    $article.append($header, $content, $hr, $footer);
+    $footerRightSideDiv.append($flag, $retweet, $heart);
+    $footer.append($duration, $footerRightSideDiv);
+
+    $article.append($tweetHeader, $content, $hr, $footer);
 
     return $article;
   };
@@ -96,30 +89,21 @@ $(document).ready(function() {
   }
 
 
-
   const errorMessageElement = function(errorType) {
-    const $h3Error = $('<h3>').attr('id', 'error-message');
-    if (errorType === "zero") {
-      $h3Error.text("Don't be shy. Use your words.");
-      return $h3Error;
-    }
-    if (errorType === "exceededLength") {
-      $h3Error.text("Uh oh!!! Tweet length exceeds 140 characters. Buy \"tweeter pro\" to enter more.");
-      return $h3Error;
-    }
+    const errorMessages = {
+      zero: "Don't be shy. Use your words.",
+      exceededLength: "Uh oh!!! Tweet length exceeds 140 characters. Buy \"tweeter pro\" to enter more."
+    };
+    return $('<h3>').attr('id', 'error-message').text(errorMessages[errorType]);
   };
+
 
   const loadTweets = function() {
-    $.ajax({
-      method: "GET",
-      url: "/tweets",
-    }).then((res) => {
-      renderTweets(res);
-    }
-    );
+    $.get("/tweets")
+      .then(renderTweets)
+      .catch(error => console.log('Error details: ' + error));
   };
   loadTweets();
-
 
 
   const $form = $('form');
@@ -129,8 +113,8 @@ $(document).ready(function() {
     event.preventDefault();
 
     if ($("#error-message")) {
-      $("#error-message").hide();
-      $("#error-message").remove();
+      $("#error-message").hide().remove();
+      // $("#error-message").remove();
     }
 
     if ($tweet.length === 0) {
@@ -144,24 +128,16 @@ $(document).ready(function() {
       return;
     }
 
-    $.ajax({
-      method: "POST",
-      url: "/tweets",
-      data: $tweetDataSerialized,
-      success: function() {
+    $.post('/tweets', $tweetDataSerialized)
+      .then(() => {
         $("#tweet-text").val('');
 
-        // Fetch and add the latest tweet to the page
-        $.ajax({
-          method: "GET",
-          url: "/tweets",
-          success: function(res) {
-            const latestTweet = res[0];
-            const $formattedTweetData = createTweetElement(latestTweet);
-            $('#tweets-container').prepend($formattedTweetData);
-          }
-        });
-      }
-    });
+        $.get('/tweets')
+          .then((res) => {
+            $("#tweets-container").prepend(createTweetElement(res[0]))
+          })
+          .catch((err) => console.log('Error: ' + err));
+      })
+      .catch((err) => console.log('Error: ' + err));
   });
 });

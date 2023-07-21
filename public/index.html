@@ -58,37 +58,38 @@
   </nav>
 
   <div class="content-page">
-  <header class="main-header">
-    <div>
-      <img src="/images/profile-hex.png">
-    </div>
-    <br>
-    <div>
-      <h2>Ramesh Raman</h2>
-    </div>
-  </header>
+    <header class="main-header">
+      <div>
+        <img src="/images/profile-hex.png">
+      </div>
+      <br>
+      <div>
+        <h2>Ramesh Raman</h2>
+      </div>
+    </header>
 
-  <!-- Page-specific (main) content here -->
-  <main class="container">
-    <section class="new-tweet">
-      <h2>Compose Tweet</h2>
-      <form method="post" action="/tweets">
-        <textarea name="text" id="tweet-text" placeholder="What are you humming about?"></textarea>
+    <!-- Page-specific (main) content here -->
+    <main class="container">
+      <section class="new-tweet">
+        <h2>Compose Tweet</h2>
+        <form method="post" action="/tweets">
+          <textarea name="text" id="tweet-text" placeholder="What are you humming about?"></textarea>
 
-        <div class="tweetContent">
+          <!-- <div class="tweetContent"> -->
           <button type="submit" id="submit">Tweet</button>
           <output name="counter" id="counter" class="counter" for="tweet-text">140</output>
-        </div>
-      </form>
-    </section>
+          <!-- </div> -->
 
-    <!-- <TWEETS AREA> -->
-    <section id="tweets-container">
-    </section>
+        </form>
+      </section>
 
-  </main>
+      <!-- <TWEETS AREA> -->
+      <section id="tweets-container">
+      </section>
 
-</div>
+    </main>
+
+  </div>
 
 </body>
 

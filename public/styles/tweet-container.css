@@ -5,11 +5,6 @@
   margin-right: 5%;
 }
 
-article.tweet header {
-  display: flex;
-  justify-content: space-between;
-}
-
 article {
   border: solid;
   padding: 5%;
@@ -20,20 +15,28 @@ article:hover {
   box-shadow: 10px 5px 5px rgb(221, 129, 216);
 }
 
-header {
+#tweet-header {
+  display: flex;
   height: 10%;
   color: aliceblue;
+  justify-content: space-between;
+}
+
+#tweet-header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#user-handle {
+  color: rgb(167, 25, 120);
 }
 
 img {
-  padding-right: 5px;
+  padding-right: 10px;
 }
 
-.user-handle {
-  color: rgb(148, 148, 142);
-}
-
-article p{
+article p {
   word-wrap: break-word;
 }
 
@@ -43,10 +46,15 @@ footer {
   font-size: 16px;
 }
 
+footer i {
+  padding: 2px;
+}
+
+
+
 @media only screen and (min-width: 1024px) {
-  header {
+  #tweet-header {
     height: auto;
     color: aliceblue;
   }
-
 }

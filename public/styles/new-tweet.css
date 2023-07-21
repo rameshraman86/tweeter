@@ -23,10 +23,17 @@ textarea {
   display: none;
 }
 
-.tweetContent {
+/* .tweetContent {
   font-family: 'Bungee', cursive;
   display: flex;
   justify-content: space-between;
+} */
+
+#submit{
+  float:left;
+}
+#counter {
+  float: right;
 }
 
 .counter {
