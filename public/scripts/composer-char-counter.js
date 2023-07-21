@@ -15,13 +15,9 @@ $(document).ready(function() {
     $counter.val(remainingChars);
   });
 
-  $("footer").find(".fa-regular.fa-flag, .fa-regular.fa-circle, .fa-regular.fa-heart").on({
-    mouseenter: function() {
-      $(this).removeClass("fa-regular").addClass("fa-solid");
-    },
-    mouseleave: function() {
-      $(this).removeClass("fa-solid").addClass("fa-regular");
-    }
-  });
 
+// const $flag = $('article footer');
+// $flag.on('mouseover', function(event) {
+//   console.log(event);
+// })
 });

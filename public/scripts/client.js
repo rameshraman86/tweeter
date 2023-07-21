@@ -48,6 +48,8 @@ $(document).ready(function() {
     const handle = user.handle;
     const name = user.name;
 
+    const dataAttr = 0;
+
     const $article = $('<article>').addClass('tweet');
 
     const $tweetHeader = $('<div>').addClass('tweet-header').attr('id', "tweet-header");
@@ -114,7 +116,6 @@ $(document).ready(function() {
 
     if ($("#error-message")) {
       $("#error-message").hide().remove();
-      // $("#error-message").remove();
     }
 
     if ($tweet.length === 0) {
