@@ -1,7 +1,3 @@
-/* .container {
-  display: flex;
-} */
-
 .new-tweet {
   margin-left: 5%;
   margin-right: 5%;
@@ -22,12 +18,6 @@ textarea {
   color: red;
   display: none;
 }
-
-/* .tweetContent {
-  font-family: 'Bungee', cursive;
-  display: flex;
-  justify-content: space-between;
-} */
 
 #submit{
   float:left;
