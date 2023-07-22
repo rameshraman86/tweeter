@@ -6,6 +6,7 @@
 {
 
   $(document).ready(function() {
+
     const renderTweets = function(tweets) {
       for (const tweet of tweets) {
         const $formattedTweetData = createTweetElement(tweet);
@@ -41,10 +42,9 @@
 
 
       const $footerRightSideDiv = $('<div>');
-
-      const $flag = $('<i>').addClass('fa-regular fa-flag');
-      const $retweet = $('<i>').addClass('fa-regular fa-circle');
-      const $heart = $('<i>').addClass('fa-regular fa-heart');
+      const $flag = $('<i>').addClass('fa-solid fa-flag');
+      const $retweet = $('<i>').addClass('fa-solid fa-circle');
+      const $heart = $('<i>').addClass('fa-solid fa-heart');
 
       $footerRightSideDiv.append($flag, $retweet, $heart);
       $footer.append($duration, $footerRightSideDiv);
@@ -114,8 +114,6 @@
         })
         .catch((err) => console.log('Error: ' + err));
     });
-
-
   });
 
 }
