@@ -14,10 +14,4 @@ $(document).ready(function() {
     }
     $counter.val(remainingChars);
   });
-
-
-// const $flag = $('article footer');
-// $flag.on('mouseover', function(event) {
-//   console.log(event);
-// })
 });
