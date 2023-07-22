@@ -7,6 +7,7 @@
 
   $(document).ready(function() {
 
+    //render all tweets from the db. uses createTweetElement to create each tweet out of db
     const renderTweets = function(tweets) {
       for (const tweet of tweets) {
         const $formattedTweetData = createTweetElement(tweet);
@@ -14,7 +15,7 @@
       }
     };
 
-
+    //creates a new tweet
     const createTweetElement = function(tweet) {
       const { content, created_at, user } = tweet;
       const timePassed = timeago.format(created_at);
@@ -54,6 +55,7 @@
       return $article;
     };
 
+    //sanitizes tweet content to text to prevent XSS injection
     function sanitize(text) {
       const element = document.createTextNode(text);
       const div = document.createElement('div');
@@ -61,43 +63,30 @@
       return div.innerHTML;
     }
 
-
-    const errorMessageElement = function(errorType) {
-      const errorMessages = {
-        zero: "Don't be shy. Use your words.",
-        exceededLength: "Uh oh!!! Tweet length exceeds 140 characters. Buy \"tweeter pro\" to enter more."
-      };
-      return $('<h3>').attr('id', 'error-message').text(errorMessages[errorType]);
-    };
-
-
     const loadTweets = function() {
       $.get("/tweets")
         .then(renderTweets)
         .catch(error => console.log('Error details: ' + error));
     };
-    loadTweets();
-
 
     const $form = $('form');
     $form.on('submit', function(event) {
-
-      const $tweetDataSerialized = $form.serialize();
-      const $tweet = $("#tweet-text")[0].value;
       event.preventDefault();
 
-      if ($("#error-message")) {
-        $("#error-message").hide().remove();
-      }
+      const $error = $("#error");
+      const $tweetDataSerialized = $form.serialize();
+      const $tweet = $("#tweet-text")[0].value;
+
+      $error.removeClass().addClass("error");
 
       if ($tweet.length === 0) {
-        $("form").before(errorMessageElement("zero"));
-        $("#error-message").slideToggle();
+        $error.removeClass("error").addClass("error-show");
+        $error.html("Don't be shy. Use your words.");
         return;
       }
       if ($tweet.length > 140) {
-        $("form").before(errorMessageElement("exceededLength"));
-        $("#error-message").slideToggle();
+        $error.removeClass("error").addClass("error-show");
+        $error.html("Use less words. Less than 140.");
         return;
       }
 
@@ -114,6 +103,8 @@
         })
         .catch((err) => console.log('Error: ' + err));
     });
+
+    loadTweets();
   });
 
 }

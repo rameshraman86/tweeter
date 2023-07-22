@@ -5,6 +5,15 @@
   /* width: 100%; */
 }
 
+.error{
+  display: none;
+}
+
+.error-show{
+  color: red;
+  font-size: 18px;
+}
+
 textarea {
   border-color:  #494d5f; /* Reset the default border styles */
   outline: none; /* Remove the default focus outline */
@@ -14,10 +23,6 @@ textarea {
   color: #FFFFFF;
 }
 
-#error-message {
-  color: red;
-  display: none;
-}
 
 #submit{
   float:left;
