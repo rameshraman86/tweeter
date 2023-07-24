@@ -11,7 +11,7 @@
     const renderTweets = function(tweets) {
       for (const tweet of tweets) {
         const $formattedTweetData = createTweetElement(tweet);
-        $('#tweets-container').append($formattedTweetData);
+        $('#tweets-container').prepend($formattedTweetData);
       }
     };
 
@@ -63,6 +63,7 @@
       return div.innerHTML;
     }
 
+
     const loadTweets = function() {
       $.get("/tweets")
         .then(renderTweets)
@@ -75,10 +76,11 @@
 
       const $error = $("#error");
       const $tweetDataSerialized = $form.serialize();
-      const $tweet = $("#tweet-text")[0].value;
+      const $tweet = $("#tweet-text")[0].value.trim();
+      var $counter = $("#counter");
 
       $error.removeClass().addClass("error");
-
+      
       if ($tweet.length === 0) {
         $error.removeClass("error").addClass("error-show");
         $error.html("Don't be shy. Use your words.");
@@ -93,11 +95,14 @@
       $.post('/tweets', $tweetDataSerialized)
         .then(() => {
           $("#tweet-text").val('');
-          $("#counter").val('140');
+          $counter.val('140');
+          $counter.removeClass().addClass("counter");
 
           $.get('/tweets')
             .then((res) => {
               $("#tweets-container").prepend(createTweetElement(res[res.length - 1]));
+              $error.removeClass().addClass("error");
+              
             })
             .catch((err) => console.log('Error: ' + err));
         })
