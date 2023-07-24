@@ -23,10 +23,15 @@ textarea {
   color: #FFFFFF;
 }
 
+button {
+  color: #FFFFFF;
+  background: #4056A1;
+}
 
 #submit{
   float:left;
 }
+
 #counter {
   float: right;
 }
@@ -37,9 +42,4 @@ textarea {
 
 .counterRed {
   color: red;
-}
-
-button {
-  color: #FFFFFF;
-  background: #4056A1;
 }
